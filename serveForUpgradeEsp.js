@@ -5,12 +5,12 @@ const app = express();
 
 const PORT = 4555;
 
-const CURRENT_VERSION = 0.1;
+const NEW_VERSION = 0.2;
 
 let downloadCounter = 1;
 
 app.get('/firmware/httpUpdateNew.bin', (request, response) => {
-    if (request.headers["x-ESP8266-version"] < CURRENT_VERSION) {
+    if (request.headers["x-ESP8266-version"] < NEW_VERSION) {
         response.download(path.join(__dirname, 'httpUpdateNew.bin'), 'httpUpdateNew.bin', (err) => {
             if (err) {
                 console.error("Problem on download firmware: ", err)
