@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 
-const PORT = 4555;
+const PORT = process.env.PORT || 4555;
 
 const NEW_VERSION = 0.2;
 
