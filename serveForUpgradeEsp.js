@@ -1,23 +1,27 @@
 const express = require('express');
-const { networkInterfaces } = require('os');
 const path = require('path');
 
 const app = express();
-const nets = networkInterfaces();
 
-const PORT = 3000;
+const PORT = 4555;
+
+const CURRENT_VERSION = 0.1;
 
 let downloadCounter = 1;
 
 app.get('/firmware/httpUpdateNew.bin', (request, response) => {
-    response.download(path.join(__dirname, 'httpUpdateNew.bin'), 'httpUpdateNew.bin', (err) => {
-        if (err) {
-            console.error("Problem on download firmware: ", err)
-        } else {
-            downloadCounter++;
-        }
-    });
-    console.log('Your file has been downloaded ' + downloadCounter + ' times!')
+    if (request.headers["x-ESP8266-version"] < CURRENT_VERSION) {
+        response.download(path.join(__dirname, 'httpUpdateNew.bin'), 'httpUpdateNew.bin', (err) => {
+            if (err) {
+                console.error("Problem on download firmware: ", err)
+            } else {
+                downloadCounter++;
+            }
+        });
+        console.log('Your file has been downloaded ' + downloadCounter + ' times!')
+    } else {
+        console.log('Your file is up to date!');
+    }
 })
 
 app.listen(PORT, () => {
