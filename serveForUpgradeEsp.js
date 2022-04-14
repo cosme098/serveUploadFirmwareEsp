@@ -5,7 +5,7 @@ const app = express();
 
 const PORT = process.env.PORT || 4555;
 
-const NEW_VERSION = 0.2;
+const NEW_VERSION = 0.1;
 
 let downloadCounter = 1;
 
